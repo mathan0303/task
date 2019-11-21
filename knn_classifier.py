@@ -5,15 +5,13 @@ import operator
 import cv2
 
 
-# calculation of euclidead distance
+
 def calculateEuclideanDistance(variable1, variable2, length):
     distance = 0
     for x in range(length):
         distance += pow(variable1[x] - variable2[x], 2)
     return math.sqrt(distance)
 
-
-# get k nearest neigbors
 def kNearestNeighbors(training_feature_vector, testInstance, k):
     distances = []
     length = len(testInstance)
@@ -27,8 +25,6 @@ def kNearestNeighbors(training_feature_vector, testInstance, k):
         neighbors.append(distances[x][0])
     return neighbors
 
-
-# votes of neighbors
 def responseOfNeighbors(neighbors):
     all_possible_neighbors = {}
     for x in range(len(neighbors)):
@@ -41,8 +37,6 @@ def responseOfNeighbors(neighbors):
                          key=operator.itemgetter(1), reverse=True)
     return sortedVotes[0][0]
 
-
-# Load image feature data to training feature vectors and test feature vector
 def loadDataset(
     filename,
     filename2,
@@ -67,11 +61,11 @@ def loadDataset(
 
 
 def main(training_data, test_data):
-    training_feature_vector = []  # training feature vector
-    test_feature_vector = []  # test feature vector
+    training_feature_vector = [] 
+    test_feature_vector = []  
     loadDataset(training_data, test_data, training_feature_vector, test_feature_vector)
-    classifier_prediction = []  # predictions
-    k = 3  # K value of k nearest neighbor
+    classifier_prediction = []  
+    k = 3  
     for x in range(len(test_feature_vector)):
         neighbors = kNearestNeighbors(training_feature_vector, test_feature_vector[x], k)
         result = responseOfNeighbors(neighbors)
